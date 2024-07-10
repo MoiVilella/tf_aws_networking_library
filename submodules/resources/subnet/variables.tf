@@ -26,4 +26,5 @@ variable "m_public_subnet" {
 variable "m_tags" {
   description = "Map with tags names and values."
   type = map(string)
+  default = {}
 }
