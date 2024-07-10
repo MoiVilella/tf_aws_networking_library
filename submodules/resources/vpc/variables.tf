@@ -3,7 +3,7 @@ variable "m_vpc_cidr" {
   type = string
   validation {
     condition = can(regex("^((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])\\.){3}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])\\/(3[0-2]|[1-2]?[0-9])$", var.m_vpc_cidr))
-    error_message = "The CIDR block is not valid. Must be formed with the IP and the mask"
+    error_message = "The CIDR block is not valid. Ensure the IP is correct and contains the mask."
   }
 }
 
@@ -20,6 +20,6 @@ variable "m_dns_hostnames" {
 }
 
 variable "m_tags" {
-  description = "value"
+  description = "Map with tags names and values."
   type = map(string)
 }
