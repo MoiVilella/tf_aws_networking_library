@@ -12,7 +12,7 @@ variable "m_cidr_block" {
 	description = "The IPv4 CIDR block for the subnet."
 	type = string
 	validation {
-		condition = can(regex("^((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])\\.){3}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])\\/(3[0-2]|[1-2]?[0-9])$", var.m_vpc_cidr))
+		condition = can(regex("^((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])\\.){3}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])\\/(3[0-2]|[1-2]?[0-9])$", var.m_cidr_block))
     error_message = "The CIDR block is not valid. Ensure the IP is correct and contains the mask"
 	}
 }
