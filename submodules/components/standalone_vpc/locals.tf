@@ -9,5 +9,5 @@ locals {
   public_subnets  = slice(local.subnets, 0, 3)
   private_subnets = slice(local.subnets, 3, 6)
 
-  # AZ naming
+  # TODO: Global tagging
 }

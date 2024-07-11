@@ -24,6 +24,18 @@ variable "m_subneting_mask" {
   }
 }
 
+variable "m_global_routes" {
+  
+}
+
+variable "m_public_routes" {
+  
+}
+
+variable "m_private_routes" {
+  
+}
+
 variable "m_tags" {
   description = "Map with tags names and values."
   type = map(string)
