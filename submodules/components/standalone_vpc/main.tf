@@ -7,6 +7,12 @@ module "vpc" {
   m_tags = var.m_tags
 }
 
+module "igw" {
+  source = "../../resources/internetGateway"
+  m_vpc_id  = module.vpc.vpc_object.id
+  m_tags    = var.m_tags
+}
+
 module "public_subnets" {
   source = "../../resources/subnet"
   providers = {
