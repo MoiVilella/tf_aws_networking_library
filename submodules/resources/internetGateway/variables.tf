@@ -1,10 +1,10 @@
 variable "m_vpc_id" {
-  description = "value"
+  description = "The ID of the VPC where to create the Internet Gateway."
   type = string
 }
 
 variable "m_tags" {
-  description = "value"
+  description = "Map with tags names and values."
   type = map(string)
   default = {}
 }
