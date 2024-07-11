@@ -1,3 +1,8 @@
+variable "m_name" {
+  description = "Base name used by the Subnet"
+  type = string
+}
+
 variable "m_vpc_id" {
   description = "The VPC ID where to create the subnet."
 	type = string

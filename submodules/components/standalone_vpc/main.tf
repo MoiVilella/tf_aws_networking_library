@@ -3,6 +3,7 @@ module "vpc" {
   providers = {
     aws = aws
   }
+  m_name = var.m_name
   m_vpc_cidr = var.m_cidr_block
   m_tags = var.m_tags
 }
@@ -19,6 +20,7 @@ module "public_subnets" {
     aws = aws
   }
   count = length(local.public_subnets)
+    m_name          = var.m_name
     m_vpc_id        = module.vpc.vpc_object.id
     m_subnet_az     = local.region_availability_zones[count.index]
     m_cidr_block    = local.public_subnets[count.index]
@@ -32,6 +34,7 @@ module "private_subnets" {
     aws = aws
   }
   count = length(local.private_subnets)
+    m_name          = var.m_name
     m_vpc_id        = module.vpc.vpc_object.id
     m_subnet_az     = local.region_availability_zones[count.index]
     m_cidr_block    = local.private_subnets[count.index]
@@ -44,6 +47,7 @@ module "public_route_table" {
   source = "../../resources/routeTable"
   m_vpc_id      = module.vpc.vpc_object.id
   m_subnets_ids = module.public_subnets[*].subnet_object.id
+  m_tags = var.m_tags
 }
 
 module "private_route_tables" {
@@ -51,4 +55,5 @@ module "private_route_tables" {
   count = length(module.private_subnets)
     m_vpc_id      = module.vpc.vpc_object.id
     m_subnets_ids = [module.private_subnets[count.index].subnet_object.id]
+    m_tags = var.m_tags
 }

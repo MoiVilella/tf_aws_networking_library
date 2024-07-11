@@ -4,6 +4,11 @@ variable "m_aws_region" {
   default = "eu-west-1"
 }
 
+variable "m_name" {
+  description = "Base name used for resources created by this module."
+  type = string
+}
+
 variable "m_cidr_block" {
   description = "The IPv4 CIDR block for the VPC."
   type = string
