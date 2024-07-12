@@ -8,6 +8,12 @@ variable "m_resource_name" {
   type = string
 }
 
+variable "m_resource_suffix" {
+  description = "Suffix used by the Name tag to show resource extra data."
+  type = string
+  default = null
+}
+
 variable "m_tags" {
   description = "Tags to merge with Name tag."
   type = map(string)
