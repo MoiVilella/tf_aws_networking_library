@@ -18,13 +18,13 @@ resource "aws_route_table" "route_table" {
     for_each = var.m_routes
 
     content {
-      cidr_block                = each.value.cidr_block
-      gateway_id                = try(each.value.gateway_id, null)
-      nat_gateway_id            = try(each.value.nat_gateway_id, null)
-      network_interface_id      = try(each.value.network_interface_id, null)
-      transit_gateway_id        = try(each.value.transit_gateway_id, null)
-      vpc_endpoint_id           = try(each.value.vpc_endpoint_id, null)
-      vpc_peering_connection_id = try(each.value.vpc_peering_connection_id, null)
+      cidr_block                = route.value.cidr_block
+      gateway_id                = try(route.value.gateway_id, null)
+      nat_gateway_id            = try(route.value.nat_gateway_id, null)
+      network_interface_id      = try(route.value.network_interface_id, null)
+      transit_gateway_id        = try(route.value.transit_gateway_id, null)
+      vpc_endpoint_id           = try(route.value.vpc_endpoint_id, null)
+      vpc_peering_connection_id = try(route.value.vpc_peering_connection_id, null)
     }
   }
 }
