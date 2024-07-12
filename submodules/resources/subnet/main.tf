@@ -10,7 +10,7 @@ module "naming" {
   source = "../../logics/naming"
   m_resource_prefix = "subnet"
   m_resource_name = local.full_name
-  m_tags = var.m_tags
+  m_tags = local.tags
 }
 
 resource "aws_subnet" "subnet" {
