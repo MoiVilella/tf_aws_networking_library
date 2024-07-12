@@ -10,6 +10,7 @@ module "vpc" {
 
 module "igw" {
   source = "../../resources/internetGateway"
+  m_name          = var.m_name
   m_vpc_id  = module.vpc.vpc_object.id
   m_tags    = var.m_tags
 }
