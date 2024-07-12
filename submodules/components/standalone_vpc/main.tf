@@ -49,6 +49,16 @@ module "public_route_table" {
   m_name        = var.m_name
   m_name_suffix = "public"
   m_vpc_id      = module.vpc.vpc_object.id
+  m_routes      = merge(
+    {
+      internet_route = {
+        cidr_block = "0.0.0.0/0", 
+        gateway_id = module.igw.igw_object.id
+      }
+    }, 
+    var.m_global_routes, 
+    var.m_public_routes
+  )
   m_subnets_ids = module.public_subnets[*].subnet_object.id
   m_tags        = var.m_tags
 }
@@ -59,6 +69,11 @@ module "private_route_tables" {
     m_name        = var.m_name
     m_name_suffix = "private-0${count.index + 1}"
     m_vpc_id      = module.vpc.vpc_object.id
+    m_routes      = merge(
+      # TODO: Add internet route through NAT
+      var.m_global_routes, 
+      var.m_public_routes
+    )
     m_subnets_ids = [module.private_subnets[count.index].subnet_object.id]
     m_tags        = var.m_tags
 }

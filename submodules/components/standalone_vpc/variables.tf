@@ -30,15 +30,45 @@ variable "m_subneting_mask" {
 }
 
 variable "m_global_routes" {
-  
+  description = "Map with global routes to add into all route tables."
+  type = map(object({
+    cidr_block                = string
+    gateway_id                = optional(string)
+    nat_gateway_id            = optional(string)
+    network_interface_id      = optional(string)
+    transit_gateway_id        = optional(string)
+    vpc_endpoint_id           = optional(string)
+    vpc_peering_connection_id = optional(string)
+  }))
+  default = {}
 }
 
 variable "m_public_routes" {
-  
+  description = "Map with routes to add into public route tables."
+  type = map(object({
+    cidr_block                = string
+    gateway_id                = optional(string)
+    nat_gateway_id            = optional(string)
+    network_interface_id      = optional(string)
+    transit_gateway_id        = optional(string)
+    vpc_endpoint_id           = optional(string)
+    vpc_peering_connection_id = optional(string)
+  }))
+  default = {}
 }
 
 variable "m_private_routes" {
-  
+  description = "Map with routes to add into private route tables."
+  type = map(object({
+    cidr_block                = string
+    gateway_id                = optional(string)
+    nat_gateway_id            = optional(string)
+    network_interface_id      = optional(string)
+    transit_gateway_id        = optional(string)
+    vpc_endpoint_id           = optional(string)
+    vpc_peering_connection_id = optional(string)
+  }))
+  default = {}
 }
 
 variable "m_tags" {
