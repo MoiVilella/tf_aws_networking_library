@@ -10,12 +10,12 @@ variable "m_name_suffix" {
 }
 
 variable "m_vpc_id" {
-  description = "value"
+  description = "The VPC ID where to create the route table."
   type = string
 }
 
 variable "m_subnets_ids" {
-  description = "value"
+  description = "List of subnet IDs to attatch to this route table."
   type = list(string)
   default = []
 }
