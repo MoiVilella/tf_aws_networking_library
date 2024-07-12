@@ -1,3 +1,14 @@
+variable "m_name" {
+  description = "Base name used by the Route Table."
+  type = string
+}
+
+variable "m_name_suffix" {
+  description = "Suffix for the the route table name."
+  type = string
+  default = null
+}
+
 variable "m_vpc_id" {
   description = "value"
   type = string
@@ -17,7 +28,7 @@ variable "m_subnets_ids" {
 } */
 
 variable "m_routes" {
-  description = "value"
+  description = "Map with routes to add into the route table."
   type = map(object({
     cidr_block                = string
     gateway_id                = optional(string)

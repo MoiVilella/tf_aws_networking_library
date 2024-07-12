@@ -1,8 +1,18 @@
+# nombre: rt-test-public | rt-test-private-ew1a
+
+module "naming" {
+  source = "../../logics/naming"
+  m_resource_prefix = "rt"
+  m_resource_name   = var.m_name
+  m_resource_suffix = var.m_name_suffix
+  m_tags            = var.m_tags
+}
+
 resource "aws_route_table" "route_table" {
-  vpc_id = var.m_vpc_id
+  vpc_id  = var.m_vpc_id
   # propagating_vgws = var.m_propagated_vgws
 
-  tags = var.m_tags
+  tags    = module.naming.tags
 
   dynamic "route" {
     for_each = var.m_routes
