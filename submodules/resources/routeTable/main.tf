@@ -1,5 +1,3 @@
-# nombre: rt-test-public | rt-test-private-ew1a
-
 module "naming" {
   source = "../../logics/naming"
   m_resource_prefix = "rt"

@@ -42,7 +42,15 @@ module "private_subnets" {
     m_tags          = var.m_tags
 }
 
-# TODO: Create NAT Gateways for private subnets
+module "nat_gateways" {
+  source = "../../resources/natGateway"
+  count = length(module.private_subnets[*])
+    m_name = var.m_name
+    m_name_suffix = module.public_subnets[count.index].subnet_object.tags.SubnetAZ
+    m_subnet_id = module.public_subnets[count.index].subnet_object.id
+  
+  depends_on = [module.igw]
+}
 
 module "public_route_table" {
   source = "../../resources/routeTable"
