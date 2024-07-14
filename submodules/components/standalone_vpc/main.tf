@@ -20,13 +20,13 @@ module "public_subnets" {
   providers = {
     aws = aws
   }
-  count = length(local.public_subnets)
-    m_name          = var.m_name
-    m_vpc_id        = module.vpc.vpc_object.id
-    m_subnet_az     = local.region_availability_zones[count.index]
-    m_cidr_block    = local.public_subnets[count.index]
-    m_public_subnet = true
-    m_tags          = var.m_tags
+  for_each = local.az_map
+    m_name        = var.m_name
+    m_vpc_id      = module.vpc.vpc_object.id
+    m_subnet_type = "public"
+    m_subnet_az   = each.key
+    m_cidr_block  = each.value.public_subnet
+    m_tags        = var.m_tags
 }
 
 module "private_subnets" {
@@ -34,12 +34,13 @@ module "private_subnets" {
   providers = {
     aws = aws
   }
-  count = length(local.private_subnets)
-    m_name          = var.m_name
-    m_vpc_id        = module.vpc.vpc_object.id
-    m_subnet_az     = local.region_availability_zones[count.index]
-    m_cidr_block    = local.private_subnets[count.index]
-    m_tags          = var.m_tags
+  for_each = local.az_map
+    m_name        = var.m_name
+    m_vpc_id      = module.vpc.vpc_object.id
+    m_subnet_type = "private"
+    m_subnet_az   = each.key
+    m_cidr_block  = each.value.private_subnet
+    m_tags        = var.m_tags
 }
 
 module "nat_gateways" {

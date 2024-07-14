@@ -18,12 +18,12 @@ output "private_subnets_cidrs" {
   value = local.private_subnets
 }
 
-output "vpc" {
-  value = module.vpc
+output "az_subnet_map" {
+  value = local.az_map
 }
 
-output "public_subnets" {
-  value = module.public_subnets[*].subnet_object.id
+output "vpc" {
+  value = module.vpc
 }
 
 output "public_route_table" {
