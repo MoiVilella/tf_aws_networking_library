@@ -31,5 +31,9 @@ Cada módulo de recurso sigue una estructura de ficheros consistente para facili
 - **main.tf**: Contiene la definición principal del recurso gestionado por el módulo.
 - **variables.tf**: Define las variables de entrada necesarias para la configuración del recurso.
 - **outputs.tf**: Define los outputs proporcionados por el módulo, que pueden ser utilizados por otros módulos.
-- **locals.tf**: Define las variables locales que necesarias para la configuración del recurso, generalmente para lógicas exclusivas del módulo.
+- **locals.tf**: Define las variables locales necesarias para la configuración del recurso, generalmente para lógicas exclusivas del módulo.
 - **README.md**: Documentación del módulo, que incluye su propósito, cómo utilizarlo y ejemplos de uso.
+
+Los módulos de recurso son esenciales para mantener una arquitectura de Terraform modular y eficiente. Al gestionar recursos específicos, estos módulos proporcionan una base sólida para la construcción de infraestructuras más complejas en niveles superiores.
+
+Para más detalles sobre cada módulo, consulta la documentación específica en el archivo README.md de cada módulo.
