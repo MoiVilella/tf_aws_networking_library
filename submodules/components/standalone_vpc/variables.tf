@@ -71,6 +71,90 @@ variable "m_private_routes" {
   default = {}
 }
 
+variable "m_global_egress" {
+  description = "Map with global routes to add into all route tables."
+  type = map(object({
+    action      = string
+    from_port   = number
+    to_port     = number
+    protocol    = string
+    cidr_block  = optional(string)
+    icmp_type   = optional(number)
+    icmp_code   = optional(number)
+  }))
+  default = {}
+}
+
+variable "m_public_egress" {
+  description = "Map with routes to add into public route tables."
+  type = map(object({
+    action      = string
+    from_port   = number
+    to_port     = number
+    protocol    = string
+    cidr_block  = optional(string)
+    icmp_type   = optional(number)
+    icmp_code   = optional(number)
+  }))
+  default = {}
+}
+
+variable "m_private_egress" {
+  description = "Map with routes to add into private route tables."
+  type = map(object({
+    action      = string
+    from_port   = number
+    to_port     = number
+    protocol    = string
+    cidr_block  = optional(string)
+    icmp_type   = optional(number)
+    icmp_code   = optional(number)
+  }))
+  default = {}
+}
+
+variable "m_global_ingress" {
+  description = "Map with global routes to add into all route tables."
+  type = map(object({
+    action      = string
+    from_port   = number
+    to_port     = number
+    protocol    = string
+    cidr_block  = optional(string)
+    icmp_type   = optional(number)
+    icmp_code   = optional(number)
+  }))
+  default = {}
+}
+
+variable "m_public_ingress" {
+  description = "Map with routes to add into public route tables."
+  type = map(object({
+    action      = string
+    from_port   = number
+    to_port     = number
+    protocol    = string
+    cidr_block  = optional(string)
+    icmp_type   = optional(number)
+    icmp_code   = optional(number)
+  }))
+  default = {}
+}
+
+variable "m_private_ingress" {
+  description = "Map with routes to add into private route tables."
+  type = map(object({
+    action      = string
+    from_port   = number
+    to_port     = number
+    protocol    = string
+    cidr_block  = optional(string)
+    icmp_type   = optional(number)
+    icmp_code   = optional(number)
+  }))
+  default = {}
+}
+
 variable "m_tags" {
   description = "Map with tags names and values."
   type = map(string)

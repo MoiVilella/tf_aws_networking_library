@@ -90,3 +90,73 @@ module "private_route_tables" {
     m_subnets_ids = [module.private_subnets[count.index].subnet_object.id]
     m_tags        = var.m_tags
 }
+
+module "public_network_acl" {
+  source = "../../resources/networkACL"
+  m_name        = var.m_name
+  m_name_suffix = "public"
+  m_vpc_id      = module.vpc.vpc_object.id
+  m_subnets_ids = module.public_subnets[*].subnet_object.id
+  m_ingress_rules = merge(
+    var.m_global_ingress,
+    var.m_public_ingress,
+    {
+      "100" = {
+        action = "allow"
+        from_port   = 0
+        to_port     = 0
+        protocol    = "-1"
+        cidr_block  = "0.0.0.0/0"
+      }
+    }
+  )
+  m_egress_rules = merge(
+    var.m_global_egress,
+    var.m_public_egress,
+    {
+      "100" = {
+        action = "allow"
+        from_port   = 0
+        to_port     = 0
+        protocol    = "-1"
+        cidr_block  = "0.0.0.0/0"
+      }
+    }
+  )
+  m_tags        = var.m_tags
+}
+
+module "private_network_acl" {
+  source = "../../resources/networkACL"
+  m_name        = var.m_name
+  m_name_suffix = "private"
+  m_vpc_id      = module.vpc.vpc_object.id
+  m_subnets_ids = module.private_subnets[*].subnet_object.id
+  m_ingress_rules = merge(
+    var.m_global_ingress,
+    var.m_private_ingress,
+    {
+      "100" = {
+        action = "allow"
+        from_port   = 0
+        to_port     = 0
+        protocol    = "-1"
+        cidr_block  = "0.0.0.0/0"
+      }
+    }
+  )
+  m_egress_rules = merge(
+    var.m_global_egress,
+    var.m_private_egress,
+    {
+      "100" = {
+        action = "allow"
+        from_port   = 0
+        to_port     = 0
+        protocol    = "-1"
+        cidr_block  = "0.0.0.0/0"
+      }
+    }
+  )
+  m_tags        = var.m_tags
+}
