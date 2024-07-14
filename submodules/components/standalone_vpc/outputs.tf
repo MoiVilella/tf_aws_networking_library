@@ -31,5 +31,5 @@ output "public_route_table" {
 }
 
 output "nat_gateways" {
-  value = module.nat_gateways[*].nat_gateway
+  value = tolist([for k, v in module.nat_gateways : v.nat_gateway.id])
 }

@@ -45,10 +45,10 @@ module "private_subnets" {
 
 module "nat_gateways" {
   source = "../../resources/natGateway"
-  count = length(module.public_subnets)
-    m_name = var.m_name
-    m_name_suffix = module.public_subnets[count.index].subnet_object.tags.SubnetAZ
-    m_subnet_id = module.public_subnets[count.index].subnet_object.id
+  for_each = local.az_map
+    m_name        = var.m_name
+    m_name_suffix = module.public_subnets[each.key].subnet_object.tags.SubnetAZ
+    m_subnet_id   = module.public_subnets[each.key].subnet_object.id
   
   depends_on = [module.igw]
 }
@@ -68,15 +68,15 @@ module "public_route_table" {
       }
     }, 
   )
-  m_subnets_ids = module.public_subnets[*].subnet_object.id
+  m_subnets_ids = tolist([for k, v in module.public_subnets : v.subnet_object.id])
   m_tags        = var.m_tags
 }
 
 module "private_route_tables" {
   source = "../../resources/routeTable"
-  count = length(module.private_subnets)
+  for_each = local.az_map
     m_name        = var.m_name
-    m_name_suffix = "private-${module.private_subnets[count.index].subnet_object.tags.SubnetAZ}"
+    m_name_suffix = "private-${local.az_map[each.key].az_abbreviation}"
     m_vpc_id      = module.vpc.vpc_object.id
     m_routes      = merge(
       var.m_global_routes,
@@ -84,15 +84,15 @@ module "private_route_tables" {
       {
         internet_route = {
           cidr_block = "0.0.0.0/0",
-          nat_gateway_id = module.nat_gateways[count.index].nat_gateway.id
+          nat_gateway_id = module.nat_gateways[each.key].nat_gateway.id
         }
       }
     )
-    m_subnets_ids = [module.private_subnets[count.index].subnet_object.id]
+    m_subnets_ids = [module.private_subnets[each.key].subnet_object.id]
     m_tags        = var.m_tags
 }
 
-module "public_network_acl" {
+/* module "public_network_acl" {
   source = "../../resources/networkACL"
   m_name        = var.m_name
   m_name_suffix = "public"
@@ -125,9 +125,9 @@ module "public_network_acl" {
     }
   )
   m_tags        = var.m_tags
-}
+} */
 
-module "private_network_acl" {
+/* module "private_network_acl" {
   source = "../../resources/networkACL"
   m_name        = var.m_name
   m_name_suffix = "private"
@@ -160,4 +160,4 @@ module "private_network_acl" {
     }
   )
   m_tags        = var.m_tags
-}
+} */
