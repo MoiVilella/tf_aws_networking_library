@@ -19,10 +19,10 @@ Cada módulo de recurso sigue una estructura de ficheros consistente para facili
 /modules
 └──logics
     └── speciffic_logic
-    ├── variables.tf
-    ├── outputs.tf
-    ├── locals.tf
-    └── README.md
+        ├── variables.tf
+        ├── outputs.tf
+        ├── locals.tf
+        └── README.md
 ```
 
 ### Descripción de los Ficheros

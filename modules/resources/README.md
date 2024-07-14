@@ -19,11 +19,11 @@ Cada módulo de recurso sigue una estructura de ficheros consistente para facili
 /modules
 └──resources
     └── speciffic_resource
-    ├── main.tf
-    ├── variables.tf
-    ├── outputs.tf
-    ├── locals.tf
-    └── README.md
+        ├── main.tf
+        ├── variables.tf
+        ├── outputs.tf
+        ├── locals.tf
+        └── README.md
 ```
 
 ### Descripción de los Ficheros
