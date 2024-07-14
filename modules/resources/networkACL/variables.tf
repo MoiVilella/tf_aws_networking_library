@@ -4,7 +4,7 @@ variable "m_name" {
 }
 
 variable "m_name_suffix" {
-  description = "Suffix for the the Network ACL name."
+  description = "Suffix for the Network ACL name."
   type = string
   default = null
 }

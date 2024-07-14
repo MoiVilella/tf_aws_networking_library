@@ -4,7 +4,7 @@ variable "m_name" {
 }
 
 variable "m_name_suffix" {
-  description = "Suffix for the the route table name."
+  description = "Suffix for the route table name."
   type = string
   default = null
 }

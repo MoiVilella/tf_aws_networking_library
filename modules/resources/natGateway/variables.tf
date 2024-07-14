@@ -4,13 +4,13 @@ variable "m_name" {
 }
 
 variable "m_name_suffix" {
-  description = "value"
+  description = "Suffix for the Nat Gateway name."
   type = string
   default = null
 }
 
 variable "m_subnet_id" {
-  description = "value"
+  description = "The Subnet ID where to create the subnet."
   type = string
 }
 
