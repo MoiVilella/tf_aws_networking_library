@@ -1,5 +1,5 @@
 variable "m_aws_region" {
-  description = "AWS region for the us-east VPC"
+  description = "AWS region in which to create the VPC."
   type = string
   default = "eu-west-1"
 }
@@ -20,7 +20,7 @@ variable "m_cidr_block" {
 }
 
 variable "m_subneting_mask" {
-  description = "Mask for making subnetting from the CIDR block and use those subnetted blocks for creating the subnets"
+  description = "Mask for making subnetting from the CIDR block and use those subnetted blocks for creating the subnets."
   type = number
 
   validation {
@@ -72,7 +72,7 @@ variable "m_private_routes" {
 }
 
 variable "m_global_egress" {
-  description = "Map with global routes to add into all route tables."
+  description = "Map with global egress rules to add into all Network ACLs."
   type = map(object({
     action      = string
     from_port   = number
@@ -86,7 +86,7 @@ variable "m_global_egress" {
 }
 
 variable "m_public_egress" {
-  description = "Map with routes to add into public route tables."
+  description = "Map with public egress rules to add into public Network ACL."
   type = map(object({
     action      = string
     from_port   = number
@@ -100,7 +100,7 @@ variable "m_public_egress" {
 }
 
 variable "m_private_egress" {
-  description = "Map with routes to add into private route tables."
+  description = "Map with private egress rules to add into private Network ACL."
   type = map(object({
     action      = string
     from_port   = number
@@ -114,7 +114,7 @@ variable "m_private_egress" {
 }
 
 variable "m_global_ingress" {
-  description = "Map with global routes to add into all route tables."
+  description = "Map with global ingress rules to add into all Network ACLs."
   type = map(object({
     action      = string
     from_port   = number
@@ -128,7 +128,7 @@ variable "m_global_ingress" {
 }
 
 variable "m_public_ingress" {
-  description = "Map with routes to add into public route tables."
+  description = "Map with public ingress rules to add into public Network ACL."
   type = map(object({
     action      = string
     from_port   = number
@@ -142,7 +142,7 @@ variable "m_public_ingress" {
 }
 
 variable "m_private_ingress" {
-  description = "Map with routes to add into private route tables."
+  description = "Map with private ingress rules to add into private Network ACL."
   type = map(object({
     action      = string
     from_port   = number
