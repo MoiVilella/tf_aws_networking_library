@@ -28,8 +28,8 @@ variable "m_ingress_rules" {
     to_port     = number
     protocol    = string
     cidr_block  = optional(string)
-    icmp_type   = optional(number)
-    icmp_code   = optional(number)
+    icmp_type   = optional(number, 0)
+    icmp_code   = optional(number, 0)
   }))
   default = {}
 }
@@ -42,8 +42,8 @@ variable "m_egress_rules" {
     to_port     = number
     protocol    = string
     cidr_block  = optional(string)
-    icmp_type   = optional(number)
-    icmp_code   = optional(number)
+    icmp_type   = optional(number, 0)
+    icmp_code   = optional(number, 0)
   }))
   default = {}
 }

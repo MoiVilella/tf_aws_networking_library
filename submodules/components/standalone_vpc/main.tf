@@ -20,13 +20,13 @@ module "public_subnets" {
   providers = {
     aws = aws
   }
-  count = length(local.public_subnets)
-    m_name          = var.m_name
-    m_vpc_id        = module.vpc.vpc_object.id
-    m_subnet_az     = local.region_availability_zones[count.index]
-    m_cidr_block    = local.public_subnets[count.index]
-    m_public_subnet = true
-    m_tags          = var.m_tags
+  for_each = local.az_map
+    m_name        = var.m_name
+    m_vpc_id      = module.vpc.vpc_object.id
+    m_subnet_type = "public"
+    m_subnet_az   = each.key
+    m_cidr_block  = each.value.public_subnet
+    m_tags        = var.m_tags
 }
 
 module "private_subnets" {
@@ -34,20 +34,21 @@ module "private_subnets" {
   providers = {
     aws = aws
   }
-  count = length(local.private_subnets)
-    m_name          = var.m_name
-    m_vpc_id        = module.vpc.vpc_object.id
-    m_subnet_az     = local.region_availability_zones[count.index]
-    m_cidr_block    = local.private_subnets[count.index]
-    m_tags          = var.m_tags
+  for_each = local.az_map
+    m_name        = var.m_name
+    m_vpc_id      = module.vpc.vpc_object.id
+    m_subnet_type = "private"
+    m_subnet_az   = each.key
+    m_cidr_block  = each.value.private_subnet
+    m_tags        = var.m_tags
 }
 
 module "nat_gateways" {
   source = "../../resources/natGateway"
-  count = length(module.public_subnets)
-    m_name = var.m_name
-    m_name_suffix = module.public_subnets[count.index].subnet_object.tags.SubnetAZ
-    m_subnet_id = module.public_subnets[count.index].subnet_object.id
+  for_each = local.az_map
+    m_name        = var.m_name
+    m_name_suffix = module.public_subnets[each.key].subnet_object.tags.SubnetAZ
+    m_subnet_id   = module.public_subnets[each.key].subnet_object.id
   
   depends_on = [module.igw]
 }
@@ -67,15 +68,15 @@ module "public_route_table" {
       }
     }, 
   )
-  m_subnets_ids = module.public_subnets[*].subnet_object.id
+  m_subnets_ids = tolist([for k, v in module.public_subnets : v.subnet_object.id])
   m_tags        = var.m_tags
 }
 
 module "private_route_tables" {
   source = "../../resources/routeTable"
-  count = length(module.private_subnets)
+  for_each = local.az_map
     m_name        = var.m_name
-    m_name_suffix = "private-${module.private_subnets[count.index].subnet_object.tags.SubnetAZ}"
+    m_name_suffix = "private-${local.az_map[each.key].az_abbreviation}"
     m_vpc_id      = module.vpc.vpc_object.id
     m_routes      = merge(
       var.m_global_routes,
@@ -83,11 +84,11 @@ module "private_route_tables" {
       {
         internet_route = {
           cidr_block = "0.0.0.0/0",
-          nat_gateway_id = module.nat_gateways[count.index].nat_gateway.id
+          nat_gateway_id = module.nat_gateways[each.key].nat_gateway.id
         }
       }
     )
-    m_subnets_ids = [module.private_subnets[count.index].subnet_object.id]
+    m_subnets_ids = [module.private_subnets[each.key].subnet_object.id]
     m_tags        = var.m_tags
 }
 
@@ -96,7 +97,7 @@ module "public_network_acl" {
   m_name        = var.m_name
   m_name_suffix = "public"
   m_vpc_id      = module.vpc.vpc_object.id
-  m_subnets_ids = module.public_subnets[*].subnet_object.id
+  m_subnets_ids = tolist([for k, v in module.public_subnets : v.subnet_object.id])
   m_ingress_rules = merge(
     var.m_global_ingress,
     var.m_public_ingress,
@@ -131,7 +132,7 @@ module "private_network_acl" {
   m_name        = var.m_name
   m_name_suffix = "private"
   m_vpc_id      = module.vpc.vpc_object.id
-  m_subnets_ids = module.private_subnets[*].subnet_object.id
+  m_subnets_ids = tolist([for k, v in module.private_subnets : v.subnet_object.id])
   m_ingress_rules = merge(
     var.m_global_ingress,
     var.m_private_ingress,

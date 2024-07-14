@@ -3,6 +3,15 @@ variable "m_name" {
   type = string
 }
 
+variable "m_subnet_type" {
+  description = "Type of subnet."
+  type = string
+  validation {
+	condition = can(index(["public", "private"], var.m_subnet_type))
+	error_message = "The subnet type must be one of: private, public"
+  }
+}
+
 variable "m_vpc_id" {
   description = "The VPC ID where to create the subnet."
 	type = string
