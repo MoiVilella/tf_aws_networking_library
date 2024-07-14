@@ -49,6 +49,7 @@ module "nat_gateways" {
     m_name        = var.m_name
     m_name_suffix = module.public_subnets[each.key].subnet_object.tags.SubnetAZ
     m_subnet_id   = module.public_subnets[each.key].subnet_object.id
+    m_tags        = var.m_tags
   
   depends_on = [module.igw]
 }
