@@ -1,5 +1,5 @@
 variable "m_name" {
-  description = "Base name used by the Subnet"
+  description = "Base name used by the Subnet."
   type = string
 }
 

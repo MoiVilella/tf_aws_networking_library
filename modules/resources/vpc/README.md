@@ -2,6 +2,8 @@
 
 Este módulo es usado para crear VPCs en una región de AWS. Puede ser llamado desde un módulo de componente de la propia librería o desde fuera de ella. Permite opciones configurables para soporte de DNS y hostnames DNS. Además, permite la asignación de etiquetas personalizadas.
 
+La composición de la etiqueta `Name` se lleva a cabo mediante el uso del módulo [naming](../../logics/naming/).
+
 ## Variables
 
 | Input Variable  | type        | Required | default | Description                                                                  |
@@ -20,7 +22,7 @@ Output Variable | Type   | Description
 
 ## Usage
 
-En este ejemplo, se crea una VPC con el nombre "mi-vpc", un bloque CIDR de "10.0.0.0/16", el soporte DNS habilitado, los nombres de host DNS deshabilitados y dos etiquetas personalizadas. Este ejemplo muestra cómo llamar al módulo desde un módulo componente de la propia librería:
+En este ejemplo, se crea una VPC con el nombre "myvpc", un bloque CIDR de "10.0.0.0/16", el soporte DNS habilitado, los nombres de host DNS deshabilitados y dos etiquetas personalizadas. Este ejemplo muestra cómo llamar al módulo desde un módulo componente de la propia librería:
 
 ```terraform
 module "vpc" {
