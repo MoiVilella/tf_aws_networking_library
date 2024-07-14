@@ -29,3 +29,7 @@ output "public_subnets" {
 output "public_route_table" {
   value = module.public_route_table.route_table
 }
+
+output "nat_gateways" {
+  value = module.nat_gateways[*].nat_gateway
+}

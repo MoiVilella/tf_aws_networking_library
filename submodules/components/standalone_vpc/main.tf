@@ -44,7 +44,7 @@ module "private_subnets" {
 
 module "nat_gateways" {
   source = "../../resources/natGateway"
-  count = length(module.private_subnets[*])
+  count = length(module.public_subnets)
     m_name = var.m_name
     m_name_suffix = module.public_subnets[count.index].subnet_object.tags.SubnetAZ
     m_subnet_id = module.public_subnets[count.index].subnet_object.id
@@ -58,7 +58,7 @@ module "public_route_table" {
   m_name_suffix = "public"
   m_vpc_id      = module.vpc.vpc_object.id
   m_routes      = merge(
-    var.m_global_routes, 
+    var.m_global_routes,
     var.m_public_routes,
     {
       internet_route = {
@@ -75,12 +75,17 @@ module "private_route_tables" {
   source = "../../resources/routeTable"
   count = length(module.private_subnets)
     m_name        = var.m_name
-    m_name_suffix = "private-0${count.index + 1}"
+    m_name_suffix = "private-${module.private_subnets[count.index].subnet_object.tags.SubnetAZ}"
     m_vpc_id      = module.vpc.vpc_object.id
     m_routes      = merge(
-      var.m_global_routes, 
-      var.m_public_routes
-      # TODO: Add internet route through NAT
+      var.m_global_routes,
+      var.m_public_routes,
+      {
+        internet_route = {
+          cidr_block = "0.0.0.0/0",
+          nat_gateway_id = module.nat_gateways[count.index].nat_gateway.id
+        }
+      }
     )
     m_subnets_ids = [module.private_subnets[count.index].subnet_object.id]
     m_tags        = var.m_tags
