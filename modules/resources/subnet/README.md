@@ -28,12 +28,12 @@ Output Variable | Type   | Description
 
 ## Usage
 
-En este ejemplo, se crea una Subnet con el nombre "mysubnet", un bloque CIDR de "10.0.0.0/20", configurada para ser de tipo público, en la zona de disponibilidad A de la región de Irlanda, habilitando que se asignen IPs públicas por defecto a las interfaces de red creadas dentro de la subred y dos etiquetas personalizadas. Este ejemplo muestra cómo llamar al módulo desde un módulo componente de la propia librería:
+En este ejemplo, se crea una Subnet con el nombre "subnet-test-ew1a-public", un bloque CIDR de "10.0.0.0/20", configurada para ser de tipo público, en la zona de disponibilidad A de la región de Irlanda, habilitando que se asignen IPs públicas por defecto a las interfaces de red creadas dentro de la subred y dos etiquetas personalizadas. Este ejemplo muestra cómo llamar al módulo desde un módulo componente de la propia librería:
 
 ```terraform
 module "subnet" {
   source          = "../../resources/subnet"
-  m_name          = "mysubnet"
+  m_name          = "test"
   m_vpc_id        = "vpc-xxxxxxxx"
   m_cidr_block    = "10.0.0.0/20"
   m_subnet_az     = "eu-west-1a"
@@ -49,9 +49,9 @@ module "subnet" {
 Para llamar directamente a este módulo desde fuera de la librería sería de la siguiente forma:
 
 ```terraform
-module "vpc" {
+module "subnet" {
   source          = "git@github.com:MoiVilella/tf_aws_networking_library//modules/resources/subnet?ref=<tag_version>"
-  m_name          = "mysubnet"
+  m_name          = "test"
   m_vpc_id        = "vpc-xxxxxxxx"
   m_cidr_block    = "10.0.0.0/20"
   m_subnet_az     = "eu-west-1a"

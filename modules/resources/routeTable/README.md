@@ -8,7 +8,7 @@ La composición de la etiqueta `Name` se lleva a cabo mediante el uso del módul
 
 | Input Variable  | type         | Required | default | Description                                                                       |
 |-----------------|--------------|----------|---------|-----------------------------------------------------------------------------------|
-| m_name          | string       | yes      |         | Base name used by the Subnet.                                                     |
+| m_name          | string       | yes      |         | Base name used by the route table                                                 |
 | m_name_suffix   | string       | no       | null    | Suffix for the the route table name. Useful to add extra information at the name. |
 | m_vpc_id        | string       | yes      |         | The VPC ID where the route table will be created.                                 |
 | m_subnets_ids   | list(string) | no       | []      | List of subnet IDs to attatch to this route table.                                |
@@ -35,12 +35,12 @@ Output Variable | Type   | Description
 
 ## Usage
 
-En este ejemplo, se crea una Tabla de rutas con el nombre "myrt-public", con una ruta configurada para enrutar el tráfico a internet a través de un AWS Internet Gateway y dos etiquetas personalizadas. Este ejemplo muestra cómo llamar al módulo desde un módulo componente de la propia librería:
+En este ejemplo, se crea una Tabla de rutas con el nombre "rt-test-public", con una ruta configurada para enrutar el tráfico a internet a través de un AWS Internet Gateway y dos etiquetas personalizadas. Este ejemplo muestra cómo llamar al módulo desde un módulo componente de la propia librería:
 
 ```terraform
-module "subnet" {
+module "route_table" {
   source        = "../../resources/routeTable"
-  m_name        = "myrt"
+  m_name        = "test"
   m_name_suffix = "public"
   m_vpc_id      = "vpc-xxxxxxx"
   m_routes      = {
@@ -59,9 +59,9 @@ module "subnet" {
 Para llamar directamente a este módulo desde fuera de la librería sería de la siguiente forma:
 
 ```terraform
-module "vpc" {
+module "route_table" {
   source          = "git@github.com:MoiVilella/tf_aws_networking_library//modules/resources/routeTable?ref=<tag_version>"
-  m_name        = "myrt"
+  m_name        = "test"
   m_name_suffix = "public"
   m_vpc_id      = "vpc-xxxxxxx"
   m_routes      = {

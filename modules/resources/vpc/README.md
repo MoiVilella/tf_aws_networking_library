@@ -22,12 +22,12 @@ Output Variable | Type   | Description
 
 ## Usage
 
-En este ejemplo, se crea una VPC con el nombre "myvpc", un bloque CIDR de "10.0.0.0/16", el soporte DNS habilitado, los nombres de host DNS deshabilitados y dos etiquetas personalizadas. Este ejemplo muestra cómo llamar al módulo desde un módulo componente de la propia librería:
+En este ejemplo, se crea una VPC con el nombre "vpc-test", un bloque CIDR de "10.0.0.0/16", el soporte DNS habilitado, los nombres de host DNS deshabilitados y dos etiquetas personalizadas. Este ejemplo muestra cómo llamar al módulo desde un módulo componente de la propia librería:
 
 ```terraform
 module "vpc" {
   source          = "../../resources/vpc"
-  m_name          = "myvpc"
+  m_name          = "test"
   m_vpc_cidr      = "10.0.0.0/16"
   m_dns_support   = true
   m_dns_hostnames = false
@@ -43,7 +43,7 @@ Para llamar directamente a este módulo desde fuera de la librería sería de la
 ```terraform
 module "vpc" {
   source          = "git@github.com:MoiVilella/tf_aws_networking_library//modules/resources/vpc?ref=<tag_version>"
-  m_name          = "myvpc"
+  m_name          = "test"
   m_vpc_cidr      = "10.0.0.0/16"
   m_dns_support   = true
   m_dns_hostnames = false
