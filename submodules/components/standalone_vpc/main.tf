@@ -92,12 +92,12 @@ module "private_route_tables" {
     m_tags        = var.m_tags
 }
 
-/* module "public_network_acl" {
+module "public_network_acl" {
   source = "../../resources/networkACL"
   m_name        = var.m_name
   m_name_suffix = "public"
   m_vpc_id      = module.vpc.vpc_object.id
-  m_subnets_ids = module.public_subnets[*].subnet_object.id
+  m_subnets_ids = tolist([for k, v in module.public_subnets : v.subnet_object.id])
   m_ingress_rules = merge(
     var.m_global_ingress,
     var.m_public_ingress,
@@ -125,14 +125,14 @@ module "private_route_tables" {
     }
   )
   m_tags        = var.m_tags
-} */
+}
 
-/* module "private_network_acl" {
+module "private_network_acl" {
   source = "../../resources/networkACL"
   m_name        = var.m_name
   m_name_suffix = "private"
   m_vpc_id      = module.vpc.vpc_object.id
-  m_subnets_ids = module.private_subnets[*].subnet_object.id
+  m_subnets_ids = tolist([for k, v in module.private_subnets : v.subnet_object.id])
   m_ingress_rules = merge(
     var.m_global_ingress,
     var.m_private_ingress,
@@ -160,4 +160,4 @@ module "private_route_tables" {
     }
   )
   m_tags        = var.m_tags
-} */
+}
