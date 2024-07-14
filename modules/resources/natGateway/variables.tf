@@ -10,7 +10,7 @@ variable "m_name_suffix" {
 }
 
 variable "m_subnet_id" {
-  description = "The Subnet ID where to create the subnet."
+  description = "The Subnet ID where to create the NAT Gateway."
   type = string
 }
 
